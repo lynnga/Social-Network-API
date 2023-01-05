@@ -1,55 +1,85 @@
-const { User, Student } = require('../models');
+
+const { ObjectId } = require('mongoose').Types;
+const { User, Thought } = require('../models');
+
+
 
 module.exports = {
-  // Get all courses
-  getUser(req, res) {
+  
+  getUsers(req, res) {
     User.find()
-      .then((users) => res.json(users))
-      .catch((err) => res.status(500).json(err));
-  },
-  // Get a course
-  getSingleUser(req, res) {
-    Course.findOne({ _id: req.params.courseId })
-      .select('-__v')
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with that ID' })
-          : res.json(course)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  // Create a course
-  createCourse(req, res) {
-    Course.create(req.body)
-      .then((course) => res.json(course))
+      .then(async (user) => {
+        return res.json(user);
+      })
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
       });
   },
-  // Delete a course
-  deleteCourse(req, res) {
-    Course.findOneAndDelete({ _id: req.params.courseId })
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with that ID' })
-          : Student.deleteMany({ _id: { $in: course.students } })
+  
+  getUserById(req, res) {
+    
+  User.findOne({ _id: req.params.id })
+      .select('-__v')
+      .then(async (user) =>
+          res.status(200).json(user)
       )
-      .then(() => res.json({ message: 'Course and students deleted!' }))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+
+  createUser(req, res) {
+    User.create(req.body)
+      .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a course
-  updateCourse(req, res) {
-    Course.findOneAndUpdate(
-      { _id: req.params.courseId },
-      { $set: req.body },
-      { runValidators: true, new: true }
-    )
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No course with this id!' })
-          : res.json(course)
+
+  deleteUser(req, res) {
+    User.findOneAndRemove({ _id: req.params.id })
+      .then((user) =>
+          res.status(200).json(user)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
+
+  
+//   // Add an assignment to a student
+//   addAssignment(req, res) {
+//     console.log('You are adding an assignment');
+//     console.log(req.body);
+//     Student.findOneAndUpdate(
+//       { _id: req.params.studentId },
+//       { $addToSet: { assignments: req.body } },
+//       { runValidators: true, new: true }
+//     )
+//       .then((student) =>
+//         !student
+//           ? res
+//               .status(404)
+//               .json({ message: 'No student found with that ID :(' })
+//           : res.json(student)
+//       )
+//       .catch((err) => res.status(500).json(err));
+//   },
+//   // Remove assignment from a student
+  // removeAssignment(req, res) {
+  //   Student.findOneAndUpdate(
+  //     { _id: req.params.studentId },
+  //     { $pull: { assignment: { assignmentId: req.params.assignmentId } } },
+  //     { runValidators: true, new: true }
+  //   )
+  //     .then((student) =>
+  //       !student
+  //         ? res
+  //             .status(404)
+  //             .json({ message: 'No student found with that ID :(' })
+  //         : res.json(student)
+  //     )
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };

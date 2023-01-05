@@ -1,23 +1,24 @@
-const router = require('express').Router();
-const {
-  getStudents,
-  getSingleStudent,
-  createStudent,
-  deleteStudent,
-  addAssignment,
-  removeAssignment,
-} = require('../../controllers/studentController');
+// const router = require('express').Router();
+// const {
+//   getThought,
+//   getThoughtById,
+//   createThought,
+//   updateThought,
+//   deleteThought
+// } = require('../../controllers/userController.js');
 
-// /api/students
-router.route('/').get(getStudents).post(createStudent);
+// // /api/courses
+// // router.route('/').get(getUsers);
+// router.route('/').get(Thought).post(createThought);
+// // router.route('/:id')
+// //               .get(getUserById)
+// //               .delete(deleteUser)
+// //               .put(updateUser);
 
-// /api/students/:studentId
-router.route('/:studentId').get(getSingleStudent).delete(deleteStudent);
-
-// /api/students/:studentId/assignments
-router.route('/:studentId/assignments').post(addAssignment);
-
-// /api/students/:studentId/assignments/:assignmentId
-router.route('/:studentId/assignments/:assignmentId').delete(removeAssignment);
-
-module.exports = router;
+// // /api/courses/:courseId
+// // router
+// //   .route('/:courseId')
+// //   .get(getSingleCourse)
+// //   .put(updateCourse)
+// //   .delete(deleteCourse);
+// module.exports = router;
