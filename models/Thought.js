@@ -33,7 +33,6 @@ const ReactionSchema = new Schema({
   
 );
 
-// Schema to create Student model
 const ThoughtSchema = new Schema(
   {
     thoughtText: {
