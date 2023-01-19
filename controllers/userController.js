@@ -41,7 +41,7 @@ module.exports = {
   updateUser(req, res) {
     User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.body, 
 
       { new: true },
 
